@@ -1,0 +1,151 @@
+// Variables
+$color-black: #780116;
+$color-white: #f7af9d;
+$color-pyramid: #f79494;
+$color-pyramid--shade: #720026;
+$color-pyramid--night: #704c5e;
+$color-blue: #bf0603;
+$color-blue--dark: #09203f;
+$color-blue--light: #ffbcb5;
+$color-sand: #e5d9f2;
+$color-sand--night: #2f004f;
+$color-yellow: #fbad18;
+$color-orange: #ff3d00;
+$color-night: #590d22;
+$cubic-bezier: cubic-bezier(.9,0,.5,1);
+// use only the available space inside the 400x400 frame
+.frame {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 400px;
+	height: 400px;
+	margin-top: -200px;
+	margin-left: -200px;
+	border-radius: 8px;
+	box-shadow: 4px 8px 16px 0 rgba(0, 0, 0, 0.2);
+	overflow: hidden;
+	background: linear-gradient(45deg, $color-blue--dark 0%, $color-blue 100%);
+	color: $color-white;
+	text-align: center;
+	font-family: "Courier New", "Courier", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.center {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+// Custom code
+.diorama {
+	position: relative;
+	display: block;
+	width: 200px;
+	height: 200px;
+	border-radius: 50%;
+	background: $color-night;
+	box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.2);
+	overflow: hidden;
+	animation: $cubic-bezier sky 5s infinite;
+	
+	&__sun {
+		position: absolute;
+		top: 134px;
+		left: -40px;
+		width: 35px;
+		height: 35px;
+		border-radius: 50%;
+		background: $color-orange;
+		transform-origin: 140px center;
+		animation: sun 5s $cubic-bezier infinite;
+	}
+	
+	&__ground {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 66px;
+		background: $color-sand;
+		z-index: 2;
+		animation: ground 5s $cubic-bezier infinite;
+	}
+	
+	&__shadow {
+		position: absolute;
+		top: 135px;
+		left: 0px;
+		right: 0px;
+		height: 80px;
+		background: rgba($color-black, .15);
+		z-index: 3;
+		clip-path: polygon(20% 0%, 80% 0, 100% 0);
+		animation: shadow 5s $cubic-bezier infinite;
+		transform-origin: center top;
+	}
+}
+
+.pyramid {
+	&__left {
+		position: absolute;
+		bottom: 65px;
+		left: 40px;
+		height: 60px;
+		width: 120px;
+		clip-path: polygon(0% 100%, 100% 100%, 50% 0%);
+		background: $color-pyramid;
+		animation: pyramid $cubic-bezier 5s infinite;
+	}
+	
+	&__right {
+		position: absolute;
+		bottom: 65px;
+		left: 40px;
+		height: 60px;
+		width: 120px;
+		clip-path: polygon(65% 100%, 100% 100%, 50% 0%);
+		background: $color-pyramid--shade;
+		animation: pyramid 5s $cubic-bezier infinite reverse;
+	}
+}
+
+// Animations
+@keyframes sun {
+	0% { background: $color-orange; transform: rotate(0); }
+	30% { background: $color-yellow; transform: rotate(60deg); }
+	70% { background: $color-yellow; }
+	100% { background: $color-orange; transform: rotate(180deg); }
+}
+
+@keyframes sky {
+	0% { background: $color-night; }
+	30% { background: $color-blue--light; }
+	70% { background: $color-blue--light; }
+	100% { background: $color-night; }
+}
+
+@keyframes ground {
+	0% { background: $color-sand--night; }
+	30% { background: $color-sand; }
+	70% { background: $color-sand; }
+	100% { background: $color-sand--night; }
+}
+
+@keyframes pyramid {
+	0% { background: $color-pyramid--night; }
+	30% { background: $color-pyramid; }
+	70% { background: $color-pyramid--shade; }
+	100% { background: $color-pyramid--night; }
+}
+
+@keyframes shadow {
+	0% { clip-path: polygon(20% 0%, 80% 0%, 100% 0%); transform: scaleY(0); }
+	30% { clip-path: polygon(20% 0%, 80% 0, 100% 50%); transform: scaleY(1); }
+	55% { transform: scaleY(.5); }
+	75% { clip-path: polygon(20% 0%, 80% 0, 0% 40%); transform: scaleY(1); }
+	100% { clip-path: polygon(20% 0%, 80% 0%, 0% 0%); transform: scaleY(0); }
+}
